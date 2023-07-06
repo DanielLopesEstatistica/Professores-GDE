@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">jquery[3.6.0];shiny-css[1.7.4];shiny-javascript[1.7.4];font-awesome[6.4.0];datatables[1.10.5];datatables-bootstrap[1.10.5];bootstrap[3.4.1];AdminLTE[2.0.6];shinydashboard[0.7.2]</script>
+<script src="jquery-3.6.0/jquery.min.js"></script>
+<link href="shiny-css-1.7.4/shiny.min.css" rel="stylesheet" />
+<script src="shiny-javascript-1.7.4/shiny.min.js"></script>
+<link href="font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
+<script src="datatables-1.10.5/js/jquery.dataTables.min.js"></script>
+<link href="datatables-bootstrap-1.10.5/css/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="datatables-bootstrap-1.10.5/css/dataTables.extra.css" rel="stylesheet" />
+<script src="datatables-bootstrap-1.10.5/js/dataTables.bootstrap.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="bootstrap-3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+<link href="bootstrap-3.4.1/accessibility/css/bootstrap-accessibility.min.css" rel="stylesheet" />
+<script src="bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script src="bootstrap-3.4.1/accessibility/js/bootstrap-accessibility.min.js"></script>
+<link href="AdminLTE-2.0.6/AdminLTE.min.css" rel="stylesheet" />
+<link href="AdminLTE-2.0.6/_all-skins.min.css" rel="stylesheet" />
+<script src="AdminLTE-2.0.6/app.min.js"></script>
+<link href="shinydashboard-0.7.2/shinydashboard.css" rel="stylesheet" />
+<script src="shinydashboard-0.7.2/shinydashboard.min.js"></script>  <title>Ranking</title>
+</head>
+<body class="skin-blue" style="min-height: 611px;">
+  <div class="wrapper">
+    <header class="main-header">
+      <span class="logo">Ranking</span>
+      <nav class="navbar navbar-static-top" role="navigation">
+        <span style="display:none;">
+          <i class="fas fa-bars" role="presentation" aria-label="bars icon"></i>
+        </span>
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav"></ul>
+        </div>
+      </nav>
+    </header>
+    <aside id="sidebarCollapsed" class="main-sidebar" data-collapsed="false">
+      <section id="sidebarItemExpanded" class="sidebar">
+        <ul class="sidebar-menu">
+          <li>
+            <a href="#shiny-tab-plot" data-toggle="tab" data-value="plot">
+              <span>Pesquisar Scores</span>
+            </a>
+          </li>
+          <li>
+            <a href="#shiny-tab-tabela" data-toggle="tab" data-value="tabela">
+              <span>Tabela de Dados</span>
+            </a>
+          </li>
+          <li>
+            <a href="#shiny-tab-Explicação" data-toggle="tab" data-value="Explicação">
+              <span>Sobre</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </aside>
+    <div class="content-wrapper">
+      <section class="content">
+        <style>.scrollable-content { overflow-x: auto; }</style>
+        <div class="scrollable-content">
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane" id="shiny-tab-plot">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div id="select_type" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="select_type-label">
+                    <label class="control-label" id="select_type-label" for="select_type">Comparar</label>
+                    <div class="shiny-options-group">
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="select_type" value="Professores" checked="checked"/>
+                          <span>Professores</span>
+                        </label>
+                      </div>
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="select_type" value="Institutos"/>
+                          <span>Institutos</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div id="select_input" class="shiny-html-output"></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="shiny-plot-output html-fill-item" id="histogram1" style="width:800px;height:400px;"></div>
+                </div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="shiny-tab-tabela">
+              <div class="row">
+                <div class="col-sm-12">
+                  <div id="table1" class="shiny-datatable-output"></div>
+                </div>
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="shiny-tab-Explicação">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h1>Sobre</h1>
+                    <h3>O presente Dashboard foi feito a partir de dados recolhidos do GDE (https://grade.daconline.unicamp.br/) para os votos de 1 a 5 sobre determinado professor por alunos que cursaram uma matéria com o mesmo. As informações utilizadas foram a média e a quantidade de votos que um professor recebeu ao longo dos anos em diversas matérias.</h3>
+                    <h3>Como o número de votos em cada professor varia muito, uma estatística adicional, chamada de 'Score', foi introduzida para ordenar as avaliações. O score utiliza do princípio da média Bayesiana das notas dos professores, utilizando o número de votos como parâmetro relevante para a nota final. O score pode ser calculado como:</h3>
+                    <h3>Score[i] = W[i]*A[i] + (1 - W[i]) * S</h3>
+                    <h3>W[i] = M[i]/(M[i] + Mavg)</h3>
+                    <h3>Onde W[i] é o peso da i-ésima observação, A é sua média aritmética encontrada no GDE, S é a média aritmética de todas as notas, M[i] é o número de votos e Mavg é a média do número de votos de todo o sistema.</h3>
+                    <h3>Os dados não englobam todos os professores da Unicamp pois o GDE não possui notas para todos eles. Além disso, alguns dos professores no banco de dados já se aposentaram.</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
